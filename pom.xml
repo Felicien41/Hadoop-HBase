@@ -7,7 +7,10 @@
     <groupId>com.felicien.TPHBase</groupId>
     <artifactId>HBase</artifactId>
     <version>1.0</version>
-
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
     <dependencies>
 
         <dependency>
