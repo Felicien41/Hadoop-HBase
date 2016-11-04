@@ -20,36 +20,51 @@ public class REPL {
             String tablename = "fcatherin";
             String[] familys = {"infos", "friends"};
             HBase people = new HBase(tablename, familys);
-            String prenom,infos,bff,friends;
+            String rowID,cf,qualifier,value;
 
-            people.addRecord("felicien", "infos", "sex", "m");
-
-            people.addRecord("felicien", "infos", "email", "felicien.catherin@edu.ece.fr");
-            people.addRecord("felicien", "infos", "age", "22");
-
-            people.addRecord("felicien", "friends", "BFF", "Benji");
-            friends = "Michel, Jonas, Paul_Hubert";
-
-            people.addRecord("felicien", "friends", "others", friends);
-
-            System.out.format("Projet réseau social, base de donnée utilisée : %s\n",tablename);
+            System.out.format("\nProjet réseau social, base de donnée utilisée : %s\n",tablename);
             String input = "";
 
             printHelp();
             Scanner scanIn = new Scanner(System.in);
-            while (!input.equals("q")) {
+            while (!input.equals("q") && !input.equals("quit")) {
+                System.out.print(">");
                 input = scanIn.nextLine();
                 switch (input){
                     case "s":
                     case "scan":
                         System.out.println("===========show all record========");
-                        People.getAllRecord();
+                        people.getAllRecord();
                         break;
                     case "put":
-                        System.out.println("[RowId(prenom)]: ");
-                        input = scanIn.nextLine();
-
                     case "p":
+                        System.out.println("[RowId (prénom)] : ");
+                        rowID = scanIn.nextLine();
+                        System.out.println("[CF (infos || friends)] : ");
+                        cf = scanIn.nextLine();
+                        switch (cf){
+                            case "infos":
+                                System.out.println("[Qualifier] : ");
+                                qualifier=scanIn.nextLine();
+                                System.out.format("[Qualifier][%s] : ",qualifier);
+                                value=scanIn.nextLine();
+                                people.addRecord(rowID, cf,qualifier , value);
+
+
+                                break;
+                            case "friends":
+                                System.out.println("[Qualifier (bff || others)] : ");
+                                qualifier=scanIn.nextLine();
+                                System.out.format("[Qualifier][%s] : ", qualifier);
+                                value=scanIn.nextLine();
+                                people.addRecord(rowID, cf,qualifier , value);
+                                break;
+
+                        }
+
+                        break;
+                    case "q":
+                    case "quit":
                         break;
                     case "h":
                     case "help":

@@ -41,25 +41,8 @@ public class HBase {
             }
         }
 
-    /**
-     * Delete a table
-     */
-    public static void deleteTable() throws Exception {
-        try {
-            HBaseAdmin admin = new HBaseAdmin(conf);
-            admin.disableTable(tableName);
-            admin.deleteTable(tableName);
-            System.out.println("delete table " + tableName + " ok.");
-        } catch (MasterNotRunningException e) {
-            e.printStackTrace();
-        } catch (ZooKeeperConnectionException e) {
-            e.printStackTrace();
-        }
-    }
 
-    /**
-     * Put (or insert) a row
-     */
+
     public static void addRecord(String rowKey,
                                  String family, String qualifier, String value) throws Exception {
         try {
@@ -74,37 +57,6 @@ public class HBase {
         }
     }
 
-    /**
-     * Delete a row
-     */
-    public static void delRecord(String rowKey)
-            throws IOException {
-        HTable table = new HTable(conf, tableName);
-        List<Delete> list = new ArrayList<Delete>();
-        Delete del = new Delete(rowKey.getBytes());
-        list.add(del);
-        table.delete(list);
-        System.out.println("del recored " + rowKey + " ok.");
-    }
-
-    /**
-     * Get a row
-     */
-    public static void getOneRecord (String rowKey) throws IOException{
-        HTable table = new HTable(conf, tableName);
-        Get get = new Get(rowKey.getBytes());
-        Result rs = table.get(get);
-        for(KeyValue kv : rs.raw()){
-            System.out.print(new String(kv.getRow()) + " " );
-            System.out.print(new String(kv.getFamily()) + ":" );
-            System.out.print(new String(kv.getQualifier()) + " " );
-            System.out.print(kv.getTimestamp() + " " );
-            System.out.println(new String(kv.getValue()));
-        }
-    }
-    /**
-     * Scan (or list) a table
-     */
     public static void getAllRecord () {
         try{
             HTable table = new HTable(conf, tableName);
