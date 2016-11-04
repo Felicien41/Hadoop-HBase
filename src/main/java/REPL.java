@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class REPL {
 
     public static void printHelp(){
+        //Affiche l'aide
         System.out.println("Voici la liste des commandes disponibles :");
         System.out.println("\thelp (h)\tAffiche l'aide ");
         System.out.println("\tput (p)\t\tAjouter une entrée");
@@ -28,6 +29,7 @@ public class REPL {
             printHelp();
             Scanner scanIn = new Scanner(System.in);
             while (!input.equals("q") && !input.equals("quit")) {
+                //Début du REPL
                 System.out.print(">");
                 input = scanIn.nextLine();
                 switch (input){

@@ -29,6 +29,7 @@ public class HBase {
     }
 
         public HBase(String tableName,String[] familys) throws IOException {
+            //Création de la base si elle n'existe pas déjà.
             this.tableName=tableName;
             HBaseAdmin admin = new HBaseAdmin(conf);
             if (!admin.tableExists(tableName)) {
@@ -58,6 +59,7 @@ public class HBase {
     }
 
     public static void getAllRecord () {
+        //Scan de toute la base.
         try{
             HTable table = new HTable(conf, tableName);
             Scan s = new Scan();
